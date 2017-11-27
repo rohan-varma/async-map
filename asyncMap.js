@@ -1,5 +1,5 @@
 
-//simulate a job: do some async processing (basically waiting in this case) and then invoke a callback
+//simulate a job: do some async processing (basically waiting in this case) and then invoke a callback, passing in a single arg to the callback
 const job1 = cb => setTimeout(() => cb('first'), 900);
 
 const job2 = cb => setTimeout(() => cb('second'), 100);
@@ -16,10 +16,10 @@ const asyncMap = (jobs, callback) => {
 	const results = [];
 	let finished = 0;
 	for(let i = 0; i < jobs.length; i++) {
+		//have to pass in a callack to the job, which is then invoked with the result of the job
 		(job => job(result => {
 			results[i] = result;
-			finished++;
-			if (finished === jobs.length) {
+			if (++finished === jobs.length) {
 				callback(results);
 			}
 		}))(jobs[i]);
@@ -30,10 +30,10 @@ const functionalAsyncMap = (jobs, callback) => {
 	const results = [];
 	let finished = 0;
 	jobs.forEach((job, i) => {
+		//have to pass in a callack to the job, which is then invoked with the result of the job
 		job(result => {
 			results[i] = result;
-			finished++;
-			if (finished === jobs.length) {
+			if (++finished === jobs.length) {
 				callback(results);
 			}
 		});
