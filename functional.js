@@ -27,6 +27,8 @@ const reduce = (iterable, reducer) => {
 		return reduced
 	}
 }
+
+
 each([1, 2, 3], (element, idx) => console.log('idx is ', idx, 'element is ', element))
 console.log('events are', filter([0, 1, 2, 3], element => element % 2 === 0))
 console.log(reduce([1, 2, 3], (a, b) => a + b))
